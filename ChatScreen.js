@@ -24,7 +24,7 @@ const ChatScreen = ({navigation, route}) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        navigation.setOptions({ headerTitle: route.params.title, });
+        navigation.setOptions({headerTitle: route.params.title,});
         if (route.params.firstMessage) {
             sendMessage();
         }
@@ -66,21 +66,21 @@ const ChatScreen = ({navigation, route}) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.messages}>
-                {messages.filter(msg => {
-                    return msg.role !== 'system'
-                }).map((message, index) => (
-                    <View key={index}
-                          style={[styles.message, message.role === 'user' ? styles.userMessage : styles.botMessage]}>
-                        <Text style={styles.messageText}>{message.content}</Text>
-                    </View>
-                ))}
-            </ScrollView>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.inputContainer}
-            >
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.inputContainer}
+        >
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.messages}>
+                    {messages.filter(msg => {
+                        return msg.role !== 'system'
+                    }).map((message, index) => (
+                        <View key={index}
+                              style={[styles.message, message.role === 'user' ? styles.userMessage : styles.botMessage]}>
+                            <Text style={styles.messageText}>{message.content}</Text>
+                        </View>
+                    ))}
+                </ScrollView>
                 <TextInput
                     style={styles.input}
                     value={message}
@@ -92,13 +92,13 @@ const ChatScreen = ({navigation, route}) => {
                 <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
                     <Text style={styles.sendButtonText}>Send</Text>
                 </TouchableOpacity>
-            </KeyboardAvoidingView>
-            {isLoading && (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color="#0000ff"/>
-                </View>
-            )}
-        </SafeAreaView>
+                {isLoading && (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="#0000ff"/>
+                    </View>
+                )}
+            </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 };
 
