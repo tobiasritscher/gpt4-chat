@@ -8,12 +8,12 @@ import {
     KeyboardAvoidingView,
     Platform,
     StyleSheet, View,
+    ActivityIndicator,
 } from 'react-native';
-import {ActivityIndicator} from "react-native-web";
 import Markdown from 'react-native-markdown-text';
 
 const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
-const YOUR_API_KEY = ''
+const YOUR_API_KEY = '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'
 
 const ChatScreen = ({navigation, route}) => {
     const [message, setMessage] = useState(route.params.firstMessage ?? '');
