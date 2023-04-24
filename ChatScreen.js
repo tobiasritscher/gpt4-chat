@@ -10,7 +10,6 @@ import {
     StyleSheet, View,
     ActivityIndicator,
 } from 'react-native';
-import Markdown from "react-native-markdown-text";
 
 const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
 const YOUR_API_KEY = process.env.openai_api
@@ -73,7 +72,7 @@ const ChatScreen = ({navigation, route}) => {
                 }).map((message, index) => (
                     <View key={index}
                           style={[styles.message, message.role === 'user' ? styles.userMessage : styles.botMessage]}>
-                        <Markdown style={styles.messageText}>{message.content}</Markdown>
+                        <Text style={styles.messageText}>{message.content}</Text>
                     </View>
                 ))}
             </ScrollView>
@@ -92,12 +91,12 @@ const ChatScreen = ({navigation, route}) => {
                 <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
                     <Text style={styles.sendButtonText}>Send</Text>
                 </TouchableOpacity>
-                {isLoading && (
-                    <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="large" color="#0000ff"/>
-                    </View>
-                )}
             </KeyboardAvoidingView>
+            {isLoading && (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                </View>
+            )}
         </SafeAreaView>
     );
 };
