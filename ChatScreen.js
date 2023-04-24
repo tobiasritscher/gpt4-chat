@@ -10,10 +10,10 @@ import {
     StyleSheet, View,
     ActivityIndicator,
 } from 'react-native';
-import Markdown from 'react-native-markdown-text';
+import Markdown from "react-native-markdown-text";
 
 const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
-const YOUR_API_KEY = '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'
+const YOUR_API_KEY = process.env.openai_api
 
 const ChatScreen = ({navigation, route}) => {
     const [message, setMessage] = useState(route.params.firstMessage ?? '');
@@ -66,21 +66,21 @@ const ChatScreen = ({navigation, route}) => {
     };
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.inputContainer}
-        >
-            <SafeAreaView style={styles.container}>
-                <ScrollView style={styles.messages}>
-                    {messages.filter(msg => {
-                        return msg.role !== 'system'
-                    }).map((message, index) => (
-                        <View key={index}
-                              style={[styles.message, message.role === 'user' ? styles.userMessage : styles.botMessage]}>
-                            <Text style={styles.messageText}>{message.content}</Text>
-                        </View>
-                    ))}
-                </ScrollView>
+        <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.messages}>
+                {messages.filter(msg => {
+                    return msg.role !== 'system'
+                }).map((message, index) => (
+                    <View key={index}
+                          style={[styles.message, message.role === 'user' ? styles.userMessage : styles.botMessage]}>
+                        <Markdown style={styles.messageText}>{message.content}</Markdown>
+                    </View>
+                ))}
+            </ScrollView>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.inputContainer}
+            >
                 <TextInput
                     style={styles.input}
                     value={message}
@@ -97,8 +97,8 @@ const ChatScreen = ({navigation, route}) => {
                         <ActivityIndicator size="large" color="#0000ff"/>
                     </View>
                 )}
-            </SafeAreaView>
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 };
 
